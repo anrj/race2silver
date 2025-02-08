@@ -37,7 +37,18 @@ async function getRank(summonerId) {
     const rankData = response.data.find(
       (entry) => entry.queueType === 'RANKED_SOLO_5x5',
     );
-    return rankData ? rankData.tier + ' ' + rankData.rank : 'Unranked';
+
+    if (!rankData) {
+      return { tier: 'Unranked', rank: '', leaguePoints: 0, wins: 0, losses: 0 };
+    }
+
+    return {
+      tier: rankData.tier,
+      rank: rankData.rank,
+      leaguePoints: rankData.leaguePoints,
+      wins: rankData.wins,
+      losses: rankData.losses,
+    };
   }
   catch (error) {
     if (error.response) {
@@ -125,7 +136,10 @@ async function main() {
   const summonerId = await getSummonerId(puuid);
   const rank = await getRank(summonerId);
   const matches = await getMatchHistory(puuid, 1);
-  console.log('Rank:', rank);
+  console.log('Rank:', rank.tier + ' ' + rank.rank);
+  console.log('LP:', rank.leaguePoints);
+  console.log('Wins:', rank.wins);
+  console.log('Losses:', rank.losses);
   for (const match of matches) {
     const matchDetails = await getMatchDetails(match);
     // console.log('Match Details:', JSON.stringify(matchDetails, null, 2));
@@ -133,4 +147,10 @@ async function main() {
   }
 }
 
-main().catch(console.error);
+module.exports = {
+  getSummonerId,
+  getRank,
+  getPUUID,
+  getMatchHistory,
+  getMatchDetails,
+};
