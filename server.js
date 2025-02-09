@@ -79,5 +79,3 @@ app.get('/match-history/:puuid', async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
-export const API_BASE_URL = `http://localhost:${PORT}`;

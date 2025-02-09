@@ -1,4 +1,7 @@
 const API_BASE_URL = 'http://localhost:3000';
+// Change with host machine public ip
+// would like to be accessed as variables
+// https://race2silver.anrj.site
 
 async function fetchPlayerData(gameName, tagLine) {
   // Get PUUID
