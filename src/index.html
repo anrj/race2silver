@@ -10,17 +10,19 @@
       />
 
       <script type="module">
-        import { fetchStats } from './stats.js';
+        import { fetchStats } from './stats2.js';
 
           async function updateRank() {
             try {
-              const { gogicha, khela } = fetchStats();
+              const { gogicha, khela } = await fetchStats();
 
               document.getElementById('gogicha-rank').innerText = gogicha.rank;
               document.getElementById('gogicha-lp').innerText = ` • ${gogicha.lp} LP`;
+              document.getElementById('gogicha-rank-image').src = `assets/images/ranks/${gogicha.rankTier}.webp`;
 
               document.getElementById('khela-rank').innerText = khela.rank;
               document.getElementById('khela-lp').innerText = `${khela.lp} LP • `;
+              document.getElementById('khela-rank-image').src = `assets/images/ranks/${khela.rankTier}.webp`;
             }
             catch (error) {
               console.error(error);
@@ -45,7 +47,7 @@
             <h2 class="username-left">Gogicha</h2>
           </div>
           <div class="rank-container-left">
-            <img class="rank-icon" src="assets/images/ranks/Unranked.webp" />
+            <img class="rank-icon" id="gogicha-rank-image" src="assets/images/ranks/Unranked.webp" />
             <span class="rank" id="gogicha-rank">Unranked</span>&nbsp;
             <span class="rank" style="font-size: 0.98em" id="gogicha-lp"> • 0 LP</span>
           </div>
@@ -59,7 +61,7 @@
           <div class="rank-container-right">
             <span class="rank" style="font-size: 0.98em" id="khela-lp">0 LP • </span>&nbsp;
             <span class="rank" id="khela-rank">Unranked</span>
-            <img class="rank-icon" src="assets/images/ranks/Unranked.webp" />
+            <img class="rank-icon" id="khela-rank-image" src="assets/images/ranks/Unranked.webp" />
           </div>
         </div>
       </div>

@@ -152,13 +152,19 @@ async function fetchStats() {
   return {
     gogicha: {
       rank: `${gogichaRankTier} ${gogichaRankDivision}`,
+      rankTier: gogichaRankTier,
       lp: gogichaLP,
     },
     khela: {
       rank: `${khelaRankTier} ${khelaRankDivision}`,
+      rankTier: khelaRankTier,
       lp: khelaLP,
     },
   };
 }
 
-export { fetchStats };
+fetchStats().then(console.log);
+
+module.exports = {
+  fetchStats,
+};
