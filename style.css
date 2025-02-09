@@ -3,12 +3,23 @@ body {
   color: #ffffff;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Spiegel", sans-serif;
 }
 
 @font-face {
   font-family: 'Beaufort for LOL';
   src: url('../assets/fonts/BeaufortforLOL-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Spiegel';
+  src: url('../assets/fonts/spiegel.ttf') format('truetype');
+}
+
+h1 {
+  color: #ffffff;
+  font-family: "Beaufort for LOL";
+  font-size: 5.6em;
 }
 
 div.header {
@@ -23,20 +34,85 @@ div.header {
 
 img.silver-icon {
   position: absolute;
-  z-index: 1;
   width: 20%;
   opacity: 0.5;
   z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
-h1 {
-  color: #ffffff;
-  font-family: "Beaufort for LOL", Arial, sans-serif;
-  font-size: 5.6em;
+
+img.pfp {
+  width: 64px;
+  height: 64px;
+  border-radius: 5%;
+  margin: 0px;
 }
+
+.flexbox-container {
+  display: flex;
+  gap: 120px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.flexbox {
+  flex: 1;
+  background: black;
+  padding: 20px;
+  border-radius: 8px;
+  border: 0px solid #ffffff;
+}
+
+.username-left {
+  display: inline-block;
+  vertical-align: top;  
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 2em;
+  font-family: "Beaufort for LOL";
+}
+
+.username-right {
+  display: inline-block;
+  vertical-align: top;  
+  margin-right: 10px;
+  margin-top: 10px;
+  font-size: 2em;
+  font-family: "Beaufort for LOL";
+}
+
+.rank-container-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.rank-container-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 5px;
+}
+
+img.rank-icon {
+  position: relative;
+  width: 10%;
+}
+
+.rank {
+  margin-top: 5px;
+  font-family: "Spiegel", sans-serif;
+  font-size: 1.6em;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  margin: 0px;
+}
+
 
 .not-selectable {
   -webkit-touch-callout: none;

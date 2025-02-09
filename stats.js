@@ -130,27 +130,35 @@ async function getMatchDetails(matchId) {
   }
 }
 
-async function main() {
-  const body = await getPUUID('Elegy', 'EUNE');
-  const puuid = body.puuid;
-  const summonerId = await getSummonerId(puuid);
-  const rank = await getRank(summonerId);
-  const matches = await getMatchHistory(puuid, 1);
-  console.log('Rank:', rank.tier + ' ' + rank.rank);
-  console.log('LP:', rank.leaguePoints);
-  console.log('Wins:', rank.wins);
-  console.log('Losses:', rank.losses);
-  for (const match of matches) {
-    const matchDetails = await getMatchDetails(match);
-    // console.log('Match Details:', JSON.stringify(matchDetails, null, 2));
-    console.log('Match Details:', matchDetails);
-  }
+
+async function fetchStats() {
+  const gogicha = await getPUUID('Elegy', 'EUNE');
+  const khela = await getPUUID('khela1', 'EUNE');
+
+  const gogichaSummonerId = await getSummonerId(gogicha.puuid);
+  const khelaSummonerId = await getSummonerId(khela.puuid);
+
+  const gogichaRank = await getRank(gogichaSummonerId);
+  const khelaRank = await getRank(khelaSummonerId);
+
+  const gogichaRankTier = gogichaRank.tier.charAt(0).toUpperCase() + gogichaRank.tier.slice(1).toLowerCase();
+  const gogichaRankDivision = gogichaRank.rank;
+  const gogichaLP = gogichaRank.leaguePoints;
+
+  const khelaRankTier = khelaRank.tier.charAt(0).toUpperCase() + khelaRank.tier.slice(1).toLowerCase();
+  const khelaRankDivision = khelaRank.rank;
+  const khelaLP = khelaRank.leaguePoints;
+
+  return {
+    gogicha: {
+      rank: `${gogichaRankTier} ${gogichaRankDivision}`,
+      lp: gogichaLP,
+    },
+    khela: {
+      rank: `${khelaRankTier} ${khelaRankDivision}`,
+      lp: khelaLP,
+    },
+  };
 }
 
-module.exports = {
-  getSummonerId,
-  getRank,
-  getPUUID,
-  getMatchHistory,
-  getMatchDetails,
-};
+export { fetchStats };

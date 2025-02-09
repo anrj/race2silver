@@ -1,13 +1,67 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Home</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <div class="header not-selectable">
-    <h1>RACE TO SILVER</h1>
-    <img class="silver-icon not-selectable" src="assets/ranks/Silver.webp">
-  </div>
-</body>
-</html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>RACE TO SILVER</title>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <link
+        rel="icon"
+        type="image/webp"
+        href="/assets/images/ranks/Silver.webp"
+      />
+
+      <script type="module">
+        import { fetchStats } from './stats.js';
+
+          async function updateRank() {
+            try {
+              const { gogicha, khela } = fetchStats();
+
+              document.getElementById('gogicha-rank').innerText = gogicha.rank;
+              document.getElementById('gogicha-lp').innerText = ` • ${gogicha.lp} LP`;
+
+              document.getElementById('khela-rank').innerText = khela.rank;
+              document.getElementById('khela-lp').innerText = `${khela.lp} LP • `;
+            }
+            catch (error) {
+              console.error(error);
+            }
+          }
+          document.addEventListener("DOMContentLoaded", updateRank);
+      </script>
+    </head>
+    <body>
+      <div class="header not-selectable">
+        <h1>RACE TO SILVER</h1>
+        <img
+          class="silver-icon not-selectable"
+          src="assets/images/ranks/Silver.webp"
+        />
+      </div>
+
+      <div class="flexbox-container">
+        <div class="flexbox">
+          <div>
+            <img class="pfp" src="assets/images/pfp/gogicha.png" />
+            <h2 class="username-left">Gogicha</h2>
+          </div>
+          <div class="rank-container-left">
+            <img class="rank-icon" src="assets/images/ranks/Unranked.webp" />
+            <span class="rank" id="gogicha-rank">Unranked</span>&nbsp;
+            <span class="rank" style="font-size: 0.98em" id="gogicha-lp"> • 0 LP</span>
+          </div>
+        </div>
+
+        <div class="flexbox">
+          <div class="profile-container">
+            <h2 class="username-right">Khela</h2>
+            <img class="pfp" src="assets/images/pfp/khela.png" />
+          </div>
+          <div class="rank-container-right">
+            <span class="rank" style="font-size: 0.98em" id="khela-lp">0 LP • </span>&nbsp;
+            <span class="rank" id="khela-rank">Unranked</span>
+            <img class="rank-icon" src="assets/images/ranks/Unranked.webp" />
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
