@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors());
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const RIOT_API_KEY = process.env.RIOT_API_KEY;
 
 app.use(express.static('src'));
@@ -79,3 +79,5 @@ app.get('/match-history/:puuid', async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+export const API_BASE_URL = `http://localhost:${PORT}`;
