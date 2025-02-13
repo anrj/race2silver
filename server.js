@@ -64,11 +64,27 @@ app.get('/rank/:summonerId', async (req, res) => {
   }
 });
 
-app.get('/match-history/:puuid', async (req, res) => {
+// get match history IDs with puuid
+app.get('/match-history/:puuid/:count', async (req, res) => {
   try {
     const { puuid, count } = req.params;
     const response = await axios.get(
       `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?count=${count}`,
+      { headers: { 'X-Riot-Token': RIOT_API_KEY } },
+    );
+    res.json(response.data);
+  }
+  catch (error) {
+    res.status(error.response?.status || 500).json({ error: error.message });
+  }
+});
+
+// get match with matchId
+app.get('/match/:matchId', async (req, res) => {
+  try {
+    const { matchId } = req.params;
+    const response = await axios.get(
+      `https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}`,
       { headers: { 'X-Riot-Token': RIOT_API_KEY } },
     );
     res.json(response.data);

@@ -1,15 +1,17 @@
 const API_BASE_URL = 'http://localhost:3000';
-// Change with host machine public ip
-// would like to be accessed as variables
-// https://race2silver.anrj.site
 
-async function fetchPlayerData(gameName, tagLine) {
-  // Get PUUID
+async function fetchPUUID(gameName, tagLine) {
   const puuidResponse = await fetch(
     `${API_BASE_URL}/puuid/${gameName}/${tagLine}`,
   );
   const puuidData = await puuidResponse.json();
   if (!puuidData || puuidData.error) throw new Error('Failed to fetch PUUID');
+  return puuidData;
+}
+
+async function fetchPlayerData(gameName, tagLine) {
+  // Get PUUID
+  const puuidData = await fetchPUUID(gameName, tagLine);
 
   // Get Summoner ID
   const summonerResponse = await fetch(
@@ -57,4 +59,58 @@ export async function fetchStats() {
       khela: { rank: 'Unranked', rankTier: 'Unranked', lp: 0 },
     };
   }
+}
+
+async function fetchMatchHistory(gameName, tagLine, count) {
+  const puuidResponse = await fetchPUUID(gameName, tagLine);
+  const puuid = puuidResponse.puuid;
+  const matchHistoryResponse = await fetch(`${API_BASE_URL}/match-history/${puuid}/${count}`);
+  const matchHistoryIDs = await matchHistoryResponse.json();
+  if (!matchHistoryIDs || matchHistoryIDs.error) {
+    throw new Error('Failed to fetch match history');
+  }
+
+  return matchHistoryIDs;
+}
+
+async function fetchMatchData(matchId) {
+  const matchResponse = await fetch(`${API_BASE_URL}/match/${matchId}`);
+  const matchData = await matchResponse.json();
+  if (!matchData || matchData.error) {
+    throw new Error('Failed to fetch match data');
+  }
+
+  return getMatchDataDetails(matchData, 'Elegy', 'EUNE');
+}
+
+async function getMatchDataDetails(matchData, gameName, tagLine) {
+  const isRankedSoloDuo = matchData.info.queueId === 420; // predicate to implement getting last 5 ranked games
+  const gameId = matchData.info.gameId;
+
+  let participant = null;
+  for (let i = 0; i < matchData.info.participants.length; i++) {
+    const currentParticipant = matchData.info.participants[i];
+    if (currentParticipant.riotIdGameName === gameName && currentParticipant.riotIdTagline === tagLine) {
+      participant = currentParticipant;
+      break;
+    }
+  }
+
+  const isRemake = matchData.info.gameDuration < 300;
+
+
+  return {
+    gameId,
+    isRankedSoloDuo,
+    participantId: participant?.participantId,
+    isWin: participant?.win,
+    isRemake,
+  };
+}
+
+export async function getLast5RankedGames(gameName, tagLine) {
+  const matchIds = await fetchMatchHistory(gameName, tagLine, 8);
+  const games = await Promise.all(matchIds.map(fetchMatchData));
+  const rankedGames = games.filter((game) => game.isRankedSoloDuo);
+  return rankedGames.slice(0, 5);
 }

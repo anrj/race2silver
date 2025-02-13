@@ -62,34 +62,17 @@ img.pfp {
   border: 0px solid #ffffff;
 }
 
-.username-left {
+.username {
   display: inline-block;
   vertical-align: top;  
-  margin-left: 10px;
   margin-top: 10px;
   font-size: 2em;
   font-family: "Beaufort for LOL";
 }
 
-.username-right {
-  display: inline-block;
-  vertical-align: top;  
-  margin-right: 10px;
-  margin-top: 10px;
-  font-size: 2em;
-  font-family: "Beaufort for LOL";
-}
-
-.rank-container-left {
+.rank-container {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  margin-top: 5px;
-}
-
-.rank-container-right {
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
   margin-top: 5px;
 }
@@ -105,7 +88,7 @@ img.rank-icon {
   font-size: 1.6em;
 }
 
-.profile-container-left {
+.profile-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -113,14 +96,37 @@ img.rank-icon {
   margin: 0px;
 }
 
-.profile-container-right {
+.game-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 5px;
-  margin: 0px;
+  margin-top: 8px;
+  gap: 4px;
 }
 
+.game {
+  font-family: "Spiegel", sans-serif;
+  font-size: 1.15em;
+  align-items: center;
+  width: 19px;
+  background-color: #9d9ba7;
+  border: 1px solid #9d9ba7; /* green - #34a853 red - #ea4335, gray - #9d9ba7 */
+  border-radius: 2px;
+  text-align: center
+}
+
+a.game-link {
+  text-decoration: none; /* Removes underline */
+  color: #ffffff;
+  font-family: "Spiegel", sans-serif;
+  font-size: 1.15em;
+  align-items: center;
+  width: 19px; /* Matches .game width */
+  background-color: #9d9ba7; /* Default background */
+  border: 1px solid #9d9ba7; /* Default border */
+  border-radius: 2px; /* Matches .game */
+  text-align: center;
+}
 
 .not-selectable {
   -webkit-touch-callout: none;
