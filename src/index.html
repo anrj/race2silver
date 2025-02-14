@@ -33,17 +33,23 @@
             const gogichaGames = await getLast5RankedGames('Elegy', 'EUNE');
             const khelaGames = await getLast5RankedGames('khela1', 'EUNE');
             for (let i = 0; i < 5; i++) {
-              document.getElementById(`gg-${i + 1}`).innerText = gogichaGames[i].isRemake ? 'R' : (gogichaGames[i].isWin ? 'W' : 'L');
-              document.getElementById(`gg-${i + 1}`).style.backgroundColor = gogichaGames[i].isRemake ? '#9d9ba7' : (gogichaGames[i].isWin ? '#34a853' : '#ea4335');
-              document.getElementById(`gg-${i + 1}`).style.borderColor = gogichaGames[i].isRemake ? '#9d9ba7' : (gogichaGames[i].isWin ? '#34a853' : '#ea4335');
-              document.getElementById(`gg-${i + 1}`).href = `https://www.leagueofgraphs.com/match/eune/${gogichaGames[i].gameId}#participant${gogichaGames[i].participantId}`;
+              let gg = document.getElementById(`gg-${i + 1}`);
+              let kg = document.getElementById(`kg-${i + 1}`);
 
-
-              document.getElementById(`kg-${i + 1}`).innerText = khelaGames[i].isRemake ? 'R' : (khelaGames[i].isWin ? 'W' : 'L');
-              document.getElementById(`kg-${i + 1}`).style.backgroundColor = khelaGames[i].isRemake ? '#9d9ba7' : (khelaGames[i].isWin ? '#34a853' : '#ea4335');
-              document.getElementById(`kg-${i + 1}`).style.borderColor = khelaGames[i].isRemake ? '#9d9ba7' : (khelaGames[i].isWin ? '#34a853' : '#ea4335');
-              document.getElementById(`kg-${i + 1}`).href = `https://www.leagueofgraphs.com/match/eune/${khelaGames[i].gameId}#participant${khelaGames[i].participantId}`;
-            }
+              if (gogichaGames[i] !== undefined) {
+                gg.innerText = gogichaGames[i].isRemake ? 'R' : (gogichaGames[i].isWin ? 'W' : 'L');
+                gg.style.backgroundColor = gogichaGames[i].isRemake ? '#9d9ba7' : (gogichaGames[i].isWin ? '#34a853' : '#ea4335');
+                gg.style.borderColor = gogichaGames[i].isRemake ? '#9d9ba7' : (gogichaGames[i].isWin ? '#34a853' : '#ea4335');
+                gg.href = `https://www.leagueofgraphs.com/match/eune/${gogichaGames[i].gameId}#participant${gogichaGames[i].participantId}`;
+              }
+            
+              if (khelaGames[i] !== undefined) {
+                kg.innerText = khelaGames[i].isRemake ? 'R' : (khelaGames[i].isWin ? 'W' : 'L');
+                kg.style.backgroundColor = khelaGames[i].isRemake ? '#9d9ba7' : (khelaGames[i].isWin ? '#34a853' : '#ea4335');
+                kg.style.borderColor = khelaGames[i].isRemake ? '#9d9ba7' : (khelaGames[i].isWin ? '#34a853' : '#ea4335');
+                kg.href = `https://www.leagueofgraphs.com/match/eune/${khelaGames[i].gameId}#participant${khelaGames[i].participantId}`;
+               }
+              }
           }
           
           document.addEventListener("DOMContentLoaded", updateRank);

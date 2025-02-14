@@ -114,5 +114,3 @@ export async function getLast5RankedGames(gameName, tagLine) {
   const rankedGames = games.filter((game) => game.isRankedSoloDuo);
   return rankedGames.slice(0, 5);
 }
-
-getLast5RankedGames('khela1', 'EUNE').then(console.log);
