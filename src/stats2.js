@@ -73,18 +73,18 @@ async function fetchMatchHistory(gameName, tagLine, count) {
   return matchHistoryIDs;
 }
 
-async function fetchMatchData(matchId) {
+async function fetchMatchData(matchId, gameName, tagLine) {
   const matchResponse = await fetch(`${API_BASE_URL}/match/${matchId}`);
   const matchData = await matchResponse.json();
   if (!matchData || matchData.error) {
     throw new Error('Failed to fetch match data');
   }
 
-  return getMatchDataDetails(matchData, 'Elegy', 'EUNE');
+  return getMatchDataDetails(matchData, gameName, tagLine);
 }
 
 async function getMatchDataDetails(matchData, gameName, tagLine) {
-  const isRankedSoloDuo = matchData.info.queueId === 420; // predicate to implement getting last 5 ranked games
+  const isRankedSoloDuo = matchData.info.queueId === 420;
   const gameId = matchData.info.gameId;
 
   let participant = null;
@@ -110,7 +110,9 @@ async function getMatchDataDetails(matchData, gameName, tagLine) {
 
 export async function getLast5RankedGames(gameName, tagLine) {
   const matchIds = await fetchMatchHistory(gameName, tagLine, 8);
-  const games = await Promise.all(matchIds.map(fetchMatchData));
+  const games = await Promise.all(matchIds.map(matchId => fetchMatchData(matchId, gameName, tagLine)));
   const rankedGames = games.filter((game) => game.isRankedSoloDuo);
   return rankedGames.slice(0, 5);
 }
+
+getLast5RankedGames('khela1', 'EUNE').then(console.log);
